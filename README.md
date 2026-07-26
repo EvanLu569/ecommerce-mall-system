@@ -1,66 +1,53 @@
-<p><h1 align="center">78.SCUM电子商城管理系统</h1></p>
+# 电子商城管理系统
 
-- <b>完整代码获取地址：从戎源码网 ([https://armycodes.com/](https://armycodes.com/))</b>
-- <b>技术探讨、资料分享，请加QQ群：692619798</b> 
-- <b>作者微信：19941326836  QQ：952045282</b> 
-- <b>承接计算机毕业设计、Java毕业设计、Python毕业设计、深度学习、机器学习</b>
-- <b>选题+开题报告+任务书+程序定制+安装调试+论文+答辩ppt 一条龙服务</b>
-- <b>所有选题地址 ([https://github.com/YuLin-Coder/AllProjectCatalog](https://github.com/YuLin-Coder/AllProjectCatalog)) </b>
+基于 Spring Boot + MyBatis + Thymeleaf + MySQL
+的完整电商平台，包含用户端和管理后台。
 
-## 项目介绍
-基于springboot的SCUM电子商城管理系统：前端thymeleaf、jquery、bootstrap，后端 maven、springmvc、spring、mybatis，集成商品浏览，商品详情，购物车，在线支付，我的订单，管理后台发布商品等功能于一体的系统。
+## 技术栈
 
-## 功能介绍
+| 层级 | 技术 |
+  |------|------|
+| 后端框架 | Spring Boot 2.3.7 |
+| ORM | MyBatis |
+| 模板引擎 | Thymeleaf |
+| 数据库 | MySQL 8.0 |
+| 前端 | Bootstrap + jQuery + ECharts |
+| 测试 | JUnit5 + SpringBootTest |
 
-### 用户
+## 功能模块
 
-- 基本功能：登录，注册，退出，个人资料查询，更改个人信息
-- 首页：全局搜索，轮播图，分类导航，为你推荐，新品上线
-- 商品信息：商品列表，商品详情，立即选购，加入购物车，购物车结算，在线支付
-- 我的订单：订单信息查询，订单继续支付
+### 用户端（商城前台）
+- 商品浏览：三级分类导航、商品搜索、商品详情
+- 购物车：添加商品、修改数量、批量结算
+- 订单系统：生成订单、在线支付、查看订单详情
+- 用户中心：注册、登录、个人信息管理
 
-### 管理员
+### 管理后台
+- 商品管理：商品上下架、编辑详情、库存管理
+- 分类管理：三级分类增删改
+- 订单管理：订单列表、发货操作
+- 用户管理：用户列表、账号禁用
+- 轮播图管理：首页轮播图配置
+- 首页配置：热销/新品/推荐商品设置
+- **数据看板**：销售额统计、订单趋势、商品销量排行（新增）
 
-- 商品管理：商品信息的增删改查，选择分类框三级联动，商品图片上传，商品上架和下架
-- 分类管理：分类信息的增删改查，下级分类管理（最多支持三级）
-- 会员管理：会员信息的增删改查，会员禁用，会员解禁
-- 订单管理：订单列表查询，订单修改，订单详情，查看订单收件人信息，订单配货，订单出库，关闭订单
-- 系统管理：修改密码
-- 首页配置：轮播图配置，热销商品配置，新品上线配置，为你推荐配置
+## 数据设计
 
-## 环境
+10 张数据表：商品表、商品分类表、用户表、购物车表、订单表、订单明细表、轮
+播图表、首页配置表、管理员表、销售统计表
 
-- <b>IntelliJ IDEA 2021.3</b>
+## 快速启动
 
-- <b>Mysql 5.7.26</b>
+  ```bash
+  # 1. 导入数据库
+  mysql -u root -p < init.sql
 
-- <b>JDK 1.8</b>
+  # 2. 修改 application.properties 中的数据库密码
 
-## 运行截图
-![](screenshot/1.png)
+  # 3. 启动项目
+  mvn spring-boot:run
 
-![](screenshot/2.png)
-
-![](screenshot/3.png)
-
-![](screenshot/4.png)
-
-![](screenshot/5.png)
-
-![](screenshot/6.png)
-
-![](screenshot/7.png)
-
-![](screenshot/8.png)
-
-![](screenshot/9.png)
-
-![](screenshot/10.png)
-
-![](screenshot/11.png)
-
-![](screenshot/12.png)
-
-![](screenshot/13.png)
-
-![](screenshot/14.png)
+  # 4. 访问
+  # 前台：http://localhost:8080
+  # 后台：http://localhost:8080/admin/login （账号 admin / 密码 123456）
+```

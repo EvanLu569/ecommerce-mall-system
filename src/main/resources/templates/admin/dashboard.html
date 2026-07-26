@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment"></header>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <div th:replace="admin/header::header-nav"></div>
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+    <div class="content-wrapper">
+        <div class="content-header"><div class="container-fluid"><h5>数据看板</h5></div></div>
+        <div class="content">
+            <div class="row">
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3 th:text="${#numbers.formatDecimal(totalSales, 0, 'COMMA', 2, 'POINT')} + ' 元'">0</h3>
+                            <p>总销售额</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-success">
+                        <div class="inner"><h3 th:text="${totalOrders}">0</h3><p>总订单数</p></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
+                        <div class="inner"><h3 th:text="${pendingOrders}">0</h3><p>待处理订单</p></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-danger">
+                        <div class="inner"><h3 th:text="${totalUsers}">0</h3><p>注册用户</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card card-primary">
+                        <div class="card-header"><h3 class="card-title">月度销售趋势</h3></div>
+                        <div class="card-body"><div id="sales-chart" style="height:350px;"></div></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-success">
+                        <div class="card-header"><h3 class="card-title">商品库存排行</h3></div>
+                        <div class="card-body"><div id="goods-chart" style="height:350px;"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script>
+    var months = /*[[${monthsData}]]*/ '[]';
+    var amounts = /*[[${amountsData}]]*/ '[]';
+    var counts = /*[[${countsData}]]*/ '[]';
+    var goodsNames = /*[[${goodsNames}]]*/ '[]';
+    var goodsStocks = /*[[${goodsStocks}]]*/ '[]';
+
+    var c1 = echarts.init(document.getElementById('sales-chart'));
+    c1.setOption({
+        tooltip: { trigger: 'axis' },
+        legend: { data: ['销售额', '订单数'] },
+        xAxis: { type: 'category', data: JSON.parse(months) },
+        yAxis: [{ type: 'value', name: '销售额' }, { type: 'value', name: '订单数' }],
+        series: [
+            { name: '销售额', type: 'bar', data: JSON.parse(amounts), itemStyle: { color: '#5470c6' } },
+            { name: '订单数', type: 'line', yAxisIndex: 1, data: JSON.parse(counts), itemStyle: { color: '#ee6666' } }
+        ]
+    });
+
+    var c2 = echarts.init(document.getElementById('goods-chart'));
+    c2.setOption({
+        tooltip: { trigger: 'axis' },
+        grid: { left: 120 },
+        yAxis: { type: 'category', data: JSON.parse(goodsNames).reverse() },
+        xAxis: { type: 'value' },
+        series: [{ type: 'bar', data: JSON.parse(goodsStocks).reverse(), itemStyle: { color: '#91cc75' } }]
+    });
+</script>
+</body>
+</html>
